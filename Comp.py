@@ -5,6 +5,9 @@ def highlight_diff(data, color='yellow'):
     other = data.xs('First', axis='columns', level=-1)
     return pd.DataFrame(np.where(data.ne(other, level=0), attr, ''),
                         index=data.index, columns=data.columns)
+df_all = pd.concat([src.set_index('id'), tar.set_index('id')], 
+                   axis='columns', keys=['First', 'Second'])
+df_final = df_all.swaplevel(axis='columns')[src.columns[1:]]
 
 caption_styles = {
     'selector':'caption',
